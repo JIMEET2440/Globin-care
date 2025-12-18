@@ -20,6 +20,8 @@ class LoginState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _isLoading = false;
+  //isLoading is used to try login only when login pressed for first time
+  //if in panic user again presses login, the loading don't start from very start
 
   @override
   void dispose() {
@@ -30,9 +32,9 @@ class LoginState extends State<LoginScreen> {
 
   Future<void> _handleLogin() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all fields')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please fill all fields')));
       return;
     }
 
@@ -48,15 +50,13 @@ class LoginState extends State<LoginScreen> {
 
     await prefs.setBool('isLoggedIn', true);
     await prefs.setString('loginType', loginType);
-    await prefs.setString('userEmail', _emailController.text);
+    await prefs.setString('userEmail', _emailController.text.toString());
 
-    if (mounted) {
       setState(() {
         _isLoading = false;
       });
 
       Navigator.pushReplacementNamed(context, '/dashboard');
-    }
   }
 
   @override
@@ -69,10 +69,7 @@ class LoginState extends State<LoginScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFF0F5FF),
-              Color(0xFFF5F9E6),
-            ],
+            colors: [Color(0xFFF0F5FF), Color(0xFFF5F9E6)],
           ),
         ),
         child: SafeArea(
@@ -111,11 +108,12 @@ class LoginState extends State<LoginScreen> {
                           //   borderRadius: BorderRadius.all(Radius.circular(15)),
                           // ),
                           child: Image.asset(
-                            "assets/images/Globin_preview.png",fit: BoxFit.fill,
-                          )
+                            "assets/images/Globin_preview.png",
+                            fit: BoxFit.fill,
+                          ),
                         ),
                         const SizedBox(height: 12),
-                         RichText(
+                        RichText(
                           text: TextSpan(
                             children: [
                               TextSpan(
@@ -253,21 +251,22 @@ class LoginState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(height: size.height * 0.025),
+
                         // Email Field
                         TextField(
                           controller: _emailController,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: 'Enter your email',
-                            labelText: 'Email',
+                            hintText: 'Enter your phone',
+                            labelText: 'Phone No.',
+                            hintStyle: const TextStyle(fontSize: 12),
                             prefixIcon: const Icon(
                               Icons.email_outlined,
                               color: primaryBlue,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(
-                                color: primaryBlue,
-                              ),
+                              borderSide: const BorderSide(color: primaryBlue),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -298,6 +297,7 @@ class LoginState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             hintText: 'Enter your password',
                             labelText: 'Password',
+                            hintStyle: const TextStyle(fontSize: 12),
                             prefixIcon: const Icon(
                               Icons.lock_outline,
                               color: primaryBlue,
@@ -315,9 +315,7 @@ class LoginState extends State<LoginScreen> {
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(
-                                color: primaryBlue,
-                              ),
+                              borderSide: const BorderSide(color: primaryBlue),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -341,10 +339,12 @@ class LoginState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(height: size.height * 0.035),
+
                         // Login Button
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
+                            //if isLoading is true, then show the circularIndicator.
                             onPressed: _isLoading ? null : _handleLogin,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: _selectedLoginType == 0
