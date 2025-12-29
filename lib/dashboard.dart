@@ -283,7 +283,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           borderRadius: BorderRadius.circular(20),
           color: const Color.fromARGB(115, 101, 160, 255),
           
-        ),
+        ),  
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
