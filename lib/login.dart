@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class LoginState extends State<LoginScreen> {
   int _selectedLoginType = 0; // 0 for Admin, 1 for User
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _isLoading = false;
@@ -27,13 +27,13 @@ class LoginState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
   Future<void> _handleLogin() async {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+    if (_phoneController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Please fill all fields')));
@@ -52,7 +52,8 @@ class LoginState extends State<LoginScreen> {
 
 
     await prefs.setString('loginType', loginType);
-    if (loginType.length < 10) {
+    
+    if (_phoneController.text.length < 10) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill a 10 digit Number')),
       );
@@ -62,7 +63,7 @@ class LoginState extends State<LoginScreen> {
       return;
     }
     await prefs.setBool('isLoggedIn', true);
-    await prefs.setString('userEmail', _emailController.text.toString());
+    await prefs.setString('userEmail', _phoneController.text.toString());
 
 
     setState(() {
@@ -266,7 +267,7 @@ class LoginState extends State<LoginScreen> {
                         SizedBox(height: size.height * 0.025),                        
                         // Email Field
                         TextField(
-                          controller: _emailController,
+                          controller: _phoneController,
                           keyboardType: TextInputType.number,
                           maxLength: 10,
                           inputFormatters: [
