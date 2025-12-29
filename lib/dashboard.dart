@@ -45,21 +45,71 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Globin Care'),
-        centerTitle: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(30))
+        ),
+        title: const Text(
+          'Admin Dashboard',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         elevation: 0,
         backgroundColor: primaryBlue,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: CircleAvatar(
+              radius: 22,
+              backgroundColor: Colors.white.withValues(alpha: 0.25),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.5),
+                    width: 2,
+                  ),
+                ),
+                child: const Center(
+                  child: Text('👨‍💼', style: TextStyle(fontSize: 20)),
+                ),
+              ),
+            ),
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(105),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: primaryBlue,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Row( 
+              
+              children: <Widget> [
+                SizedBox(width:35),
+                Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              child: Align(
+                
+                child: Text(
+                  'Hi, Admin',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+              ]
+            ),
+          ),
+        ),
       ),
+
+      // end of app bar
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -71,98 +121,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // Profile Header Card
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Card(
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [primaryBlue, darkBlue],
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 45,
-                              backgroundColor: Colors.white.withValues(alpha: 0.2),
-                              child: Icon(
-                                _loginType == 'admin'
-                                    ? Icons.admin_panel_settings
-                                    : Icons.person,
-                                size: 45,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Welcome Back',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white.withValues(alpha: 0.8),
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    _userEmail ?? 'User',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withValues(alpha: 0.25),
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: Colors.white.withValues(alpha: 0.3),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      _loginType == 'admin' ? '👨‍💼 Admin' : '👤 User',
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
               // Quick Stats Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -330,6 +288,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ),
               ),
+
+              SizedBox(height: 50),
             ],
           ),
         ),
@@ -352,7 +312,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [color.withValues(alpha: 0.8), color.withValues(alpha: 0.6)],
+            colors: [
+              color.withValues(alpha: 0.8),
+              color.withValues(alpha: 0.6),
+            ],
           ),
         ),
         padding: const EdgeInsets.all(16),
@@ -417,11 +380,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                color: Colors.white,
-                size: 32,
-              ),
+              Icon(icon, color: Colors.white, size: 32),
               const SizedBox(height: 8),
               Text(
                 title,

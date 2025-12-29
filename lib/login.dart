@@ -52,10 +52,10 @@ class LoginState extends State<LoginScreen> {
 
 
     await prefs.setString('loginType', loginType);
-    
+
     if (_phoneController.text.length < 10) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill a 10 digit Number')),
+        const SnackBar(content: Text('Please fill a 10 digit Phone Number')),
       );
       setState(() {
         _isLoading = false;
