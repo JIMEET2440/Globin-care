@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'add_sales.dart';
 
 // Brand Colors
 const Color primaryBlue = Color(0xFF0052CC);
@@ -165,7 +166,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         _buildMenuButton(
                           title: 'Add New Sale',
                           icon: Icons.add_shopping_cart,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SalesPage(),
+                              ),
+                            );
+                          },
                           isPrimary: true,
                         ),
                         _buildMenuButton(
@@ -282,8 +290,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: const Color.fromARGB(115, 101, 160, 255),
-          
-        ),  
+        ),
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
