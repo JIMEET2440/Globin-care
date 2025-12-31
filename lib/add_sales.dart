@@ -13,10 +13,10 @@ class SalesPage extends StatefulWidget {
 class SalesPageState extends State<SalesPage> {
   final TextEditingController invoiceController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
-  
+
   String? selectedCustomer;
   String? selectedDistributor;
-  
+
   List<Map<String, dynamic>> items = [];
   double subtotal = 0.0;
   double taxRate = 0.18; // 18%
@@ -33,31 +33,36 @@ class SalesPageState extends State<SalesPage> {
         child: Column(
           children: [
             // Header
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Color(0xFF6366F1),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
+            Center(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 17, 0, 255),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20) ,bottomRight: Radius.circular(20)),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Wow!',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      'A New Sale',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20),
-                  Text(
-                    'Sale',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
             ),
-            
+
             // Form Container
             Padding(
               padding: EdgeInsets.all(20),
@@ -136,8 +141,11 @@ class SalesPageState extends State<SalesPage> {
                                     color: Color(0xFFE2E8F0),
                                   ),
                                 ),
-                                suffixIcon: Icon(Icons.calendar_today,
-                                    color: Color(0xFF64748B), size: 20),
+                                suffixIcon: Icon(
+                                  Icons.calendar_today,
+                                  color: Color(0xFF64748B),
+                                  size: 20,
+                                ),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12,
                                   vertical: 12,
@@ -162,7 +170,7 @@ class SalesPageState extends State<SalesPage> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  
+
                   // Customer
                   Text(
                     'Customer',
@@ -186,8 +194,9 @@ class SalesPageState extends State<SalesPage> {
                       ),
                       isExpanded: true,
                       underline: SizedBox(),
-                      items: ['Customer 1', 'Customer 2', 'Customer 3']
-                          .map((String value) {
+                      items: ['Customer 1', 'Customer 2', 'Customer 3'].map((
+                        String value,
+                      ) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Padding(
@@ -204,7 +213,7 @@ class SalesPageState extends State<SalesPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  
+
                   // Distributor
                   Text(
                     'Distributor',
@@ -230,14 +239,15 @@ class SalesPageState extends State<SalesPage> {
                       underline: SizedBox(),
                       items: ['Distributor 1', 'Distributor 2', 'Distributor 3']
                           .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12),
-                            child: Text(value),
-                          ),
-                        );
-                      }).toList(),
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 12),
+                                child: Text(value),
+                              ),
+                            );
+                          })
+                          .toList(),
                       onChanged: (value) {
                         setState(() {
                           selectedDistributor = value;
@@ -246,7 +256,7 @@ class SalesPageState extends State<SalesPage> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  
+
                   // Add Item Button
                   Center(
                     child: OutlinedButton.icon(
@@ -268,7 +278,7 @@ class SalesPageState extends State<SalesPage> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  
+
                   // Order Summary
                   Text(
                     'Order Summary',
@@ -279,7 +289,7 @@ class SalesPageState extends State<SalesPage> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  
+
                   // Items Ordered
                   Text(
                     'Items Ordered:',
@@ -290,7 +300,7 @@ class SalesPageState extends State<SalesPage> {
                     ),
                   ),
                   SizedBox(height: 12),
-                  
+
                   // Items List
                   if (items.isEmpty)
                     Padding(
@@ -337,8 +347,11 @@ class SalesPageState extends State<SalesPage> {
                                       _calculateTotals();
                                     });
                                   },
-                                  child: Icon(Icons.close,
-                                      size: 18, color: Colors.red),
+                                  child: Icon(
+                                    Icons.close,
+                                    size: 18,
+                                    color: Colors.red,
+                                  ),
                                 ),
                               ],
                             ),
@@ -346,11 +359,11 @@ class SalesPageState extends State<SalesPage> {
                         ),
                       );
                     }).toList(),
-                  
+
                   SizedBox(height: 20),
                   Divider(color: Color(0xFFE2E8F0)),
                   SizedBox(height: 12),
-                  
+
                   // Subtotal
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -372,7 +385,7 @@ class SalesPageState extends State<SalesPage> {
                     ],
                   ),
                   SizedBox(height: 8),
-                  
+
                   // Tax
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -394,7 +407,7 @@ class SalesPageState extends State<SalesPage> {
                     ],
                   ),
                   SizedBox(height: 8),
-                  
+
                   // Discount
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -419,7 +432,7 @@ class SalesPageState extends State<SalesPage> {
                   SizedBox(height: 12),
                   Divider(color: Color(0xFFE2E8F0)),
                   SizedBox(height: 12),
-                  
+
                   // Total Amount
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -443,7 +456,7 @@ class SalesPageState extends State<SalesPage> {
                     ],
                   ),
                   SizedBox(height: 24),
-                  
+
                   // Buttons
                   Row(
                     children: [
@@ -459,8 +472,11 @@ class SalesPageState extends State<SalesPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.save_alt,
-                                  color: Color(0xFF6366F1), size: 20),
+                              Icon(
+                                Icons.save_alt,
+                                color: Color(0xFF6366F1),
+                                size: 20,
+                              ),
                               SizedBox(width: 8),
                               Text(
                                 'Save & New',
