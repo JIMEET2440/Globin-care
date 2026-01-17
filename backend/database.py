@@ -43,4 +43,4 @@ def create_tables():
 
 if __name__ == "__main__":
     # Create tables when running directly
-    create_tables()
+    get_db()

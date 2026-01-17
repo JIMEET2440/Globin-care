@@ -12,7 +12,7 @@ class CustomerCreate(BaseModel):
     name: str
     email: EmailStr
     phone: Optional[str] = None
-    address: Optional[str] = None
+    Area: Optional[str] = None
 
 
 class CustomerUpdate(BaseModel):
