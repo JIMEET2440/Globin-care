@@ -1,0 +1,24 @@
+# """
+# Requirements file for MySQL database setup
+# Install with: pip install -r requirements.txt
+# """
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Database
+mysql-connector-python==8.2.0
+sqlalchemy==2.0.23
+pymysql==1.1.0
+
+# Environment & Config
+python-dotenv==1.0.0
+
+# Validation
+pydantic==2.5.0
+pydantic[email]==2.5.0
+
+# Optional: Add more as needed
+# requests==2.31.0
+# httpx==0.25.0
