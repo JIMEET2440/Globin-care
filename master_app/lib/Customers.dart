@@ -234,125 +234,127 @@ class _CustomersPageState extends State<CustomersPage> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(2),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                isEditing ? 'Edit Customer' : 'Add New Customer',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[800],
+                SizedBox(height: 20),
+                Text(
+                  isEditing ? 'Edit Customer' : 'Add New Customer',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[800],
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                isEditing
-                    ? 'Update customer information'
-                    : 'Enter customer details below',
-                style: TextStyle(fontSize: 14, color: Colors.grey[500]),
-              ),
-              SizedBox(height: 24),
-              _buildTextField(
-                controller: nameController,
-                label: 'Full Name',
-                icon: Icons.person_outline,
-                hint: 'Enter customer name',
-              ),
-              SizedBox(height: 16),
-              _buildTextField(
-                controller: phoneController,
-                label: 'Phone Number',
-                icon: Icons.phone_outlined,
-                hint: 'Enter phone number',
-                keyboardType: TextInputType.phone,
-              ),
-              SizedBox(height: 16),
-              _buildTextField(
-                controller: areaController,
-                label: 'Area of Work',
-                icon: Icons.location_on_outlined,
-                hint: 'Enter area or district',
-              ),
-              SizedBox(height: 32),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (nameController.text.isNotEmpty &&
-                        phoneController.text.isNotEmpty &&
-                        areaController.text.isNotEmpty) {
-                      Navigator.pop(context);
+                SizedBox(height: 8),
+                Text(
+                  isEditing
+                      ? 'Update customer information'
+                      : 'Enter customer details below',
+                  style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                ),
+                SizedBox(height: 24),
+                _buildTextField(
+                  controller: nameController,
+                  label: 'Full Name',
+                  icon: Icons.person_outline,
+                  hint: 'Enter customer name',
+                ),
+                SizedBox(height: 16),
+                _buildTextField(
+                  controller: phoneController,
+                  label: 'Phone Number',
+                  icon: Icons.phone_outlined,
+                  hint: 'Enter phone number',
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: 16),
+                _buildTextField(
+                  controller: areaController,
+                  label: 'Area of Work',
+                  icon: Icons.location_on_outlined,
+                  hint: 'Enter area or district',
+                ),
+                SizedBox(height: 32),
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (nameController.text.isNotEmpty &&
+                          phoneController.text.isNotEmpty &&
+                          areaController.text.isNotEmpty) {
+                        Navigator.pop(context);
 
-                      if (isEditing && index != null) {
-                        final updatedCustomer = Customer(
-                          id: customer.id,
-                          name: nameController.text,
-                          phone: phoneController.text,
-                          area: areaController.text,
-                        );
-                        await _handleUpdateCustomer(index, updatedCustomer);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Customer updated successfully!'),
-                            backgroundColor: Colors.green[600],
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        if (isEditing && index != null) {
+                          final updatedCustomer = Customer(
+                            id: customer.id,
+                            name: nameController.text,
+                            phone: phoneController.text,
+                            area: areaController.text,
+                          );
+                          await _handleUpdateCustomer(index, updatedCustomer);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Customer updated successfully!'),
+                              backgroundColor: Colors.green[600],
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        await _handleAddCustomer(
-                          nameController.text,
-                          phoneController.text,
-                          areaController.text,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Customer added successfully!'),
-                            backgroundColor: Colors.green[600],
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                          );
+                        } else {
+                          await _handleAddCustomer(
+                            nameController.text,
+                            phoneController.text,
+                            areaController.text,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Customer added successfully!'),
+                              backgroundColor: Colors.green[600],
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
                       }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF4F46E5),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4F46E5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      elevation: 0,
                     ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    isEditing ? 'Update Customer' : 'Add Customer',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                    child: Text(
+                      isEditing ? 'Update Customer' : 'Add Customer',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 16),
-            ],
+                SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
